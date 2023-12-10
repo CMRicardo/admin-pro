@@ -10,7 +10,8 @@ import { NoPageFoundComponent } from './pages/no-page-found/no-page-found.compon
 import { PagesComponent } from './pages/pages.component';
 
 const routes: Routes = [
-  { path: '',
+  {
+    path: '',
     component: PagesComponent,
     children: [
       { path: 'dashboard', component: DashboardComponent },
