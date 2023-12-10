@@ -13,6 +13,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { ProgressComponent } from './pages/progress/progress.component';
 import { Chart1Component } from './pages/chart1/chart1.component';
+import { PagesComponent } from './pages/pages.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { Chart1Component } from './pages/chart1/chart1.component';
     SidebarComponent,
     HeaderComponent,
     ProgressComponent,
-    Chart1Component
+    Chart1Component,
+    PagesComponent
   ],
   imports: [
     BrowserModule,
