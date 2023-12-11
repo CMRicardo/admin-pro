@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-progress',
-  templateUrl: './progress.component.html',
-  styleUrls: [ './progress.component.css' ]
+  selector: 'app-incrementator',
+  templateUrl: './incrementator.component.html',
+  styles: ``
 })
-export class ProgressComponent {
+export class IncrementatorComponent {
   public progress: number = 50
 
   get percentage() {
