@@ -1,20 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IncrementatorComponent } from './incrementator/incrementator.component';
 import { FormsModule } from '@angular/forms';
 
+import { NgChartsModule } from 'ng2-charts'
 
+import { IncrementatorComponent } from './incrementator/incrementator.component';
+import { DonutComponent } from './donut/donut.component';
 
 @NgModule({
   declarations: [
-    IncrementatorComponent
+    IncrementatorComponent,
+    DonutComponent
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    NgChartsModule
   ],
   exports: [
-    IncrementatorComponent
+    IncrementatorComponent,
+    DonutComponent
   ]
 })
 export class ComponentsModule { }
