@@ -9,7 +9,6 @@ export class SettingsService {
   
 
   constructor() {
-    console.log('Settings service constructor');
     const theme = localStorage.getItem('theme') || './assets/css/colors/purple-dark.css'
     this.linkTheme?.setAttribute('href', theme)
   }
