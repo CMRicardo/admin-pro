@@ -1,12 +1,14 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
-import { UsersService } from '@services/users.service';
+import Swal from 'sweetalert2'
+
+import { UsersService } from '@services/users.service'
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: [ './register.component.css' ]
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   private formBuilder = inject(FormBuilder)
@@ -43,7 +45,9 @@ export class RegisterComponent {
         next: res => {
           console.log(res)
         },
-        error: err => console.warn(err.error.message)
+        error: err => {
+          Swal.fire('Error', err.error.message, 'error')
+        }
       })
   }
 
