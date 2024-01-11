@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { UsersService } from '@services/users.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -8,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent {
   private formBuilder = inject(FormBuilder)
+  private usersService = inject(UsersService)
   private passwordRegex = /^(?=.*\d)(?=.*[A-Z]).{6,}$/
 
   private equalPasswords = (passwordName: string, confirmationName: string) => {
@@ -25,21 +28,23 @@ export class RegisterComponent {
   public registerForm = this.formBuilder.group({
     name: ['Ricardo', [Validators.required]],
     email: ['test100@email.com', [Validators.required, Validators.email]],
-    password: [, [Validators.required, Validators.pattern(this.passwordRegex)]],
-    passwordConfirm: [, [Validators.required]],
-    terms: [, [Validators.required, Validators.requiredTrue]],
+    password: ['Admin123', [Validators.required, Validators.pattern(this.passwordRegex)]],
+    passwordConfirm: ['Admin123', [Validators.required]],
+    terms: [true, [Validators.requiredTrue]],
   }, {
     validators: this.equalPasswords('password', 'passwordConfirm')
   })
 
   public createUser = () => {
-    console.log(this.registerForm) 
-    if (this.registerForm.valid) {
-      console.log('All right');
-    } else {
-      console.log('Not so right');
-      
-    }
+    if (this.registerForm.invalid) return
+
+    this.usersService.createUser(this.registerForm.value)
+      .subscribe({
+        next: res => {
+          console.log(res)
+        },
+        error: err => console.warn(err.error.message)
+      })
   }
 
   public notValidField = (field: string): boolean => {
