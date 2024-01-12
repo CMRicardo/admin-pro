@@ -29,4 +29,17 @@ export class UsersService {
         )
       )
   }
+
+  public loginGoogle = (token: string) => {
+    console.log({ token });
+
+    return this.http.post(`${baseUrl}/auth/google`, { token })
+      .pipe(
+        tap(
+          (res: any) => {
+            localStorage.setItem('token', res.token)
+          }
+        )
+      )
+  }
 }
