@@ -17,8 +17,8 @@ export class LoginComponent {
   private usersService = inject(UsersService)
 
   public loginForm = this.formBuilder.group({
-    email: ['test100@email.com',[Validators.required, Validators.email]],
-    password: ['Admin123', [Validators.required]],
+    email: [localStorage.getItem('email') ?? '', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
     rememberMe: [false]
   })
 
@@ -27,13 +27,17 @@ export class LoginComponent {
     this.usersService.loginUser(this.loginForm.value as LoginForm)
       .subscribe({
         next: res => {
-          console.log(res);
+          if (Boolean(this.loginForm.get('rememberMe')?.value)) {
+            localStorage.setItem('email', this.loginForm.get('email')?.value as string)
+          } else {
+            localStorage.removeItem('email')
+          }
         },
         error: err => {
           Swal.fire('Error', err.error.message, 'error')
         }
       })
-    
+
     // this.router.navigateByUrl('/dashboard')
   }
 }
