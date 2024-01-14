@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
 
 import Swal from 'sweetalert2'
 
@@ -13,6 +14,7 @@ import { UsersService } from '@services/users.service'
 export class RegisterComponent {
   private formBuilder = inject(FormBuilder)
   private usersService = inject(UsersService)
+  private router = inject(Router)
   private passwordRegex = /^(?=.*\d)(?=.*[A-Z]).{6,}$/
 
   private equalPasswords = (passwordName: string, confirmationName: string) => {
@@ -43,7 +45,7 @@ export class RegisterComponent {
     this.usersService.createUser(this.registerForm.value)
       .subscribe({
         next: res => {
-          console.log(res)
+          this.router.navigateByUrl('/dashboard')
         },
         error: err => {
           Swal.fire('Error', err.error.message, 'error')

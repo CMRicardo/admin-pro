@@ -1,17 +1,20 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
 
-import { Chart1Component } from "./chart1/chart1.component";
-import { DashboardComponent } from "./dashboard/dashboard.component";
-import { PagesComponent } from "./pages.component";
-import { ProgressComponent } from "./progress/progress.component";
-import { AccountSettingsComponent } from "./account-settings/account-settings.component";
-import { PromisesComponent } from "./promises/promises.component";
-import { RxjsComponent } from "./rxjs/rxjs.component";
+import { authGuard } from '../guards/auth.guard'
+
+import { Chart1Component } from './chart1/chart1.component'
+import { DashboardComponent } from './dashboard/dashboard.component'
+import { PagesComponent } from './pages.component'
+import { ProgressComponent } from './progress/progress.component'
+import { AccountSettingsComponent } from './account-settings/account-settings.component'
+import { PromisesComponent } from './promises/promises.component'
+import { RxjsComponent } from './rxjs/rxjs.component'
 
 const routes: Routes = [
   {
     path: 'dashboard',
+    canActivate: [authGuard],
     component: PagesComponent,
     children: [
       { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
@@ -25,7 +28,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  imports: [ RouterModule.forChild(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class PagesRoutingModule { }

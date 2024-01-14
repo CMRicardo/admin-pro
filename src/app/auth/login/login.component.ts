@@ -38,9 +38,7 @@ export class LoginComponent implements AfterViewInit {
   private handleCredentialResponse(response: any) {
     this.usersService.loginGoogle(response.credential)
       .subscribe({
-        next: (res) => {
-          this.router.navigateByUrl('/dashboard')
-        }
+        next: () => this.router.navigateByUrl('/dashboard')
       })
   }
 
@@ -60,12 +58,12 @@ export class LoginComponent implements AfterViewInit {
           } else {
             localStorage.removeItem('email')
           }
+          this.router.navigateByUrl('/dashboard')
         },
         error: err => {
           Swal.fire('Error', err.error.message, 'error')
         }
       })
 
-    this.router.navigateByUrl('/dashboard')
   }
 }
