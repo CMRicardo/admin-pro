@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { RegisterForm } from '../interfaces/register-form.interface';
-import { LoginForm } from '../interfaces/login-form.interface';
-import { environment } from '../../environments/environment';
-import { tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http'
+import { Injectable, inject } from '@angular/core'
+import { RegisterForm } from '../interfaces/register-form.interface'
+import { LoginForm } from '../interfaces/login-form.interface'
+import { environment } from '../../environments/environment'
+import { tap } from 'rxjs'
 
 const baseUrl = environment.baseUrl
 
@@ -31,7 +31,7 @@ export class UsersService {
   }
 
   public loginGoogle = (token: string) => {
-    console.log({ token });
+    console.log({ token })
 
     return this.http.post(`${baseUrl}/auth/google`, { token })
       .pipe(
