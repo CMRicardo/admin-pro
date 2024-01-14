@@ -6,7 +6,9 @@ import { Observable, catchError, map, of, tap } from 'rxjs'
 import { RegisterForm } from '../interfaces/register-form.interface'
 import { LoginForm } from '../interfaces/login-form.interface'
 import { environment } from '../../environments/environment'
+import { Router } from '@angular/router'
 
+declare const google: any
 const baseUrl = environment.baseUrl
 
 @Injectable({
@@ -14,6 +16,7 @@ const baseUrl = environment.baseUrl
 })
 export class UsersService {
   private http = inject(HttpClient)
+  private router = inject(Router)
 
   public validateToken = (): Observable<boolean> => {
     const token = localStorage.getItem('token') || ''
@@ -56,5 +59,12 @@ export class UsersService {
           }
         )
       )
+  }
+
+  public logout = () => {
+    localStorage.removeItem('token')
+    google.accounts.id.revoke('ricardocorrales84@gmail.com', () => {
+      this.router.navigateByUrl('/login')
+    })
   }
 }

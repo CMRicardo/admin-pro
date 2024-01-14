@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, ViewChild, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -17,6 +17,7 @@ export class LoginComponent implements AfterViewInit {
   private router = inject(Router)
   private formBuilder = inject(FormBuilder)
   private usersService = inject(UsersService)
+  private ngZone = inject(NgZone)
   @ViewChild('googleBtn') private googleBtn!: ElementRef
 
   ngAfterViewInit(): void {
@@ -38,7 +39,9 @@ export class LoginComponent implements AfterViewInit {
   private handleCredentialResponse(response: any) {
     this.usersService.loginGoogle(response.credential)
       .subscribe({
-        next: () => this.router.navigateByUrl('/dashboard')
+        next: () => {
+          this.ngZone.run(() => this.router.navigateByUrl('/dashboard'))
+        }
       })
   }
 
