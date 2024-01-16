@@ -55,7 +55,7 @@ export class LoginComponent implements AfterViewInit {
     if (this.loginForm.invalid) return
     this.usersService.loginUser(this.loginForm.value as LoginForm)
       .subscribe({
-        next: res => {
+        next: () => {
           if (Boolean(this.loginForm.get('rememberMe')?.value)) {
             localStorage.setItem('email', this.loginForm.get('email')?.value as string)
           } else {
@@ -67,6 +67,5 @@ export class LoginComponent implements AfterViewInit {
           Swal.fire('Error', err.error.message, 'error')
         }
       })
-
   }
 }
