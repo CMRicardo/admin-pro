@@ -8,6 +8,8 @@ import { UsersService } from '@services/users.service';
 })
 export class HeaderComponent {
   private usersService = inject(UsersService)
+  public user = this.usersService.user
+
   public logout() {
     this.usersService.logout()
   }

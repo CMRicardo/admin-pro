@@ -2,9 +2,10 @@ import { AfterViewInit, Component, ElementRef, NgZone, ViewChild, inject } from 
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import Swal from 'sweetalert2';
+
 import { UsersService } from '@services/users.service';
 import { LoginForm } from '../../interfaces/login-form.interface';
-import Swal from 'sweetalert2';
 
 declare const google: any
 
