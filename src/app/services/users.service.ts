@@ -18,12 +18,18 @@ const baseUrl = environment.baseUrl
 export class UsersService {
   private http = inject(HttpClient)
   private router = inject(Router)
-  public user?: User
+  public user!: User
+
+  get token (): string {
+    return localStorage.getItem('token') || ''
+  }
+  get uid (): string {
+    return this.user?.uid || ''
+  }
 
   public validateToken = (): Observable<boolean> => {
-    const token = localStorage.getItem('token') || ''
     return this.http.get(`${baseUrl}/auth/renew`, {
-      headers: { 'x-token': token }
+      headers: { 'x-token': this.token }
     }).pipe(
       map((res: any) => {
         const { email, name, role, google, img = '', uid } = res.user
@@ -43,6 +49,17 @@ export class UsersService {
         )
       )
   }
+
+  public updateProfile = (data: { email: string, name: string, role?: string }) => {
+    data = {
+      ...data,
+      role: this.user.role
+    }
+    return this.http.put(`${baseUrl}/users/${this.uid}`, data, {
+      headers: { 'x-token': this.token }
+    })
+  }
+
   public loginUser = (formData: LoginForm) => {
     return this.http.post(`${baseUrl}/auth`, formData)
       .pipe(
