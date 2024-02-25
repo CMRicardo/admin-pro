@@ -20,6 +20,7 @@ export class ProfileComponent implements OnInit {
   public profileForm!: FormGroup
   public user: User = this.usersService.user
   public imageToUpload?: File
+  public imgTemp: string | ArrayBuffer | null = ''
 
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({
@@ -38,15 +39,23 @@ export class ProfileComponent implements OnInit {
   }
 
   public changeImage(event: Event) {
-    const fileFromForm = (event.target as any).files[0]
-    const file: File = fileFromForm
+    const file = (event.target as any).files[0]
     this.imageToUpload = file
+    if (!file) {
+      this.imgTemp = null
+      return
+    }
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onloadend = () => {
+      this.imgTemp = reader.result
+    }
   }
-  
+
   public uploadImage() {
     if (!this.imageToUpload) return
     this.fileUploadService
       .updateImage(this.imageToUpload, 'users', this.user.uid || '')
-      .then(console.log)
+      .then(img => this.user.img = img)
   }
 }

@@ -24,8 +24,9 @@ export class FileUploadService {
         body: formData
       })
       const data = await response.json()
-      console.log(data)
-      return true
+      if (data.ok) return data.fileName
+      console.log(data.message)
+      return false
     } catch (error) {
       console.log(error);
       return false
