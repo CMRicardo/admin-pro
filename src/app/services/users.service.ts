@@ -8,6 +8,7 @@ import { LoginForm } from '../interfaces/login-form.interface'
 import { environment } from '../../environments/environment'
 import { Router } from '@angular/router'
 import { User } from '../models/user.model'
+import { UsersResponse } from '../interfaces/fetch-users.interface'
 
 declare const google: any
 const baseUrl = environment.baseUrl
@@ -25,6 +26,13 @@ export class UsersService {
   }
   get uid(): string {
     return this.user?.uid || ''
+  }
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    }
   }
 
   public validateToken = (): Observable<boolean> => {
@@ -55,9 +63,7 @@ export class UsersService {
       ...data,
       role: this.user.role
     }
-    return this.http.put(`${baseUrl}/users/${this.uid}`, data, {
-      headers: { 'x-token': this.token }
-    })
+    return this.http.put(`${baseUrl}/users/${this.uid}`, data, this.headers)
   }
 
   public loginUser = (formData: LoginForm) => {
@@ -87,5 +93,11 @@ export class UsersService {
         this.router.navigateByUrl('/login')
       })
     }
+    this.router.navigateByUrl('/login')
+  }
+
+  public fetchUsers = (from: number = 0) => {
+    const url = `${baseUrl}/users?from=${from}`
+    return this.http.get<UsersResponse>(url, this.headers)
   }
 }
