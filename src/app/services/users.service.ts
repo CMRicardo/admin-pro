@@ -20,10 +20,10 @@ export class UsersService {
   private router = inject(Router)
   public user!: User
 
-  get token (): string {
+  get token(): string {
     return localStorage.getItem('token') || ''
   }
-  get uid (): string {
+  get uid(): string {
     return this.user?.uid || ''
   }
 
@@ -82,8 +82,10 @@ export class UsersService {
 
   public logout = () => {
     localStorage.removeItem('token')
-    google.accounts.id.revoke('ricardocorrales84@gmail.com', () => {
-      this.router.navigateByUrl('/login')
-    })
+    if (this.user.google) {
+      google.accounts.id.revoke(this.user.email, () => {
+        this.router.navigateByUrl('/login')
+      })
+    }
   }
 }

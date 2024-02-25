@@ -34,7 +34,9 @@ export class ProfileComponent implements OnInit {
       .subscribe((res: any) => {
         this.user.email = res.user.email
         this.user.name = res.user.name
-        Swal.fire('Profile updated!', '', 'success')
+        Swal.fire('Saved!', 'Profile updated', 'success')
+      }, (err) => {
+        Swal.fire('Error', err.error.message, 'error')
       })
   }
 
@@ -56,6 +58,12 @@ export class ProfileComponent implements OnInit {
     if (!this.imageToUpload) return
     this.fileUploadService
       .updateImage(this.imageToUpload, 'users', this.user.uid || '')
-      .then(img => this.user.img = img)
+      .then(img => {
+        this.user.img = img
+        Swal.fire('Image updated!', 'Changed image succesfully', 'success')
+      })
+      .catch(err => {
+        Swal.fire('Error', 'Error uploading image', 'error')
+      })
   }
 }
