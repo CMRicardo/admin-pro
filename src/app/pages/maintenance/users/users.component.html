@@ -7,68 +7,69 @@
     </div>
   </div>
 </div>
-
-<div class="row animated fadeIn fast">
-  <div class="col-12">
-    <div class="alert alert-info text-center" role="alert">
-      <h4 class="alert-heading">Loading...</h4>
-      <i class="fa fa-spin fa-refresh fa-2x"></i>
-      <p class="mb-0">Please be patient</p>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Total Users ({{totalUsers}})</h4>
-        <h6 class="card-subtitle">Registered users</h6>
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>Profile pic</th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Auth</th>
-                <th class="text-nowrap">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (user of users; track $index) {
-                <tr>
-                  <td>
-                    <img [src]="user.imageUrl" [alt]="user.name">
-                  </td>
-                  <td>{{user.email}}</td>
-                  <td>{{user.name}}</td>
-                  <td>{{user.role}}</td>
-                  <td>
-                    @if (user.google) {
-                      <span class="label label-danger">Google</span>
-                    } @else {
-                      <span class="label label-info">Email</span>
-                    }
-                  </td>
-                  <td class="text-nowrap">
-                    <a href="#" data-toggle="tooltip" data-original-title="Edit">
-                      <i class="fa fa-pencil text-inverse m-r-10"></i>
-                    </a>
-                    <a href="#" data-toggle="tooltip" data-original-title="Delete">
-                      <i class="fa fa-close text-danger"></i>
-                    </a>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-        <div class="btn btn-secondary">Previous</div>
-        &nbsp;
-        <div class="btn btn-secondary">Next</div>
+@if (loading) {
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="alert alert-info text-center" role="alert">
+        <h4 class="alert-heading">Loading...</h4>
+        <i class="fa fa-spin fa-refresh fa-2x"></i>
+        <p class="mb-0">Please be patient</p>
       </div>
     </div>
   </div>
-</div>
+} @else {
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Total Users ({{totalUsers}}) - {{fromUser}}</h4>
+          <h6 class="card-subtitle">Registered users</h6>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="w100" >Profile pic</th>
+                  <th>Email</th>
+                  <th>Name</th>
+                  <th class="w100" >Role</th>
+                  <th class="w100" >Auth</th>
+                  <th class="text-nowrap w100">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (user of users; track $index) {
+                  <tr>
+                    <td>
+                      <img class="w-100 img-circle" [src]="user.imageUrl" [alt]="user.name">
+                    </td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.role}}</td>
+                    <td>
+                      @if (user.google) {
+                        <span class="label label-danger">Google</span>
+                      } @else {
+                        <span class="label label-info">Email</span>
+                      }
+                    </td>
+                    <td class="text-nowrap text-center">
+                      <a href="#" data-toggle="tooltip" data-original-title="Edit">
+                        <i class="fa fa-pencil text-inverse m-r-10"></i>
+                      </a>
+                      <a href="#" data-toggle="tooltip" data-original-title="Delete">
+                        <i class="fa fa-close text-danger"></i>
+                      </a>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+          <button (click)="changePage(-5)" class="btn btn-secondary">Previous</button>
+          &nbsp;
+          <button (click)="changePage(+5)" class="btn btn-secondary">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

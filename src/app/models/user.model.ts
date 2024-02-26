@@ -13,7 +13,7 @@ export class User {
   ) { }
 
   get imageUrl() {
-    if (this.google) return this.img
+    if (this.img?.includes('http')) return this.img
     if (this.img) return `${BASE_URL}/uploads/users/${this.img}`
     return `${BASE_URL}/uploads/users/no-image`
   }

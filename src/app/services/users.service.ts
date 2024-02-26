@@ -99,5 +99,17 @@ export class UsersService {
   public fetchUsers = (from: number = 0) => {
     const url = `${baseUrl}/users?from=${from}`
     return this.http.get<UsersResponse>(url, this.headers)
+      .pipe(
+        map(res => {
+          const users = res.users
+            .map(
+              ({ name, email, img, google, role, uid }) => new User(name, email, undefined, img, google, role, uid))
+          return {
+            total: res.total,
+            users,
+            ok: res.ok
+          }
+        })
+      )
   }
 }

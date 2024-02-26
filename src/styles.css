@@ -10,3 +10,7 @@
 .selector, .cursor-pointer {
   cursor: pointer;
 }
+
+.w100 {
+  width: 100px;
+}
