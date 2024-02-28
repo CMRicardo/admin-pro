@@ -1,6 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { UsersService } from '@services/users.service';
+
+import Swal from 'sweetalert2';
+
 import { User } from '../../../models/user.model';
+import { UsersService } from '@services/users.service';
+import { SearchService } from '@services/search.service';
 
 @Component({
   selector: 'app-users',
@@ -9,9 +13,11 @@ import { User } from '../../../models/user.model';
 })
 export class UsersComponent {
   private usersService = inject(UsersService)
+  private searchService = inject(SearchService)
 
   public totalUsers: number = 0
   public users: User[] = []
+  public usersTemp: User[] = []
   public fromUser: number = 0
   public loading: boolean = true
 
@@ -26,6 +32,7 @@ export class UsersComponent {
         next: ({ total, users }) => {
           this.totalUsers = total
           this.users = users
+          this.usersTemp = users
           this.loading = false
         }
       })
@@ -38,5 +45,42 @@ export class UsersComponent {
       this.fromUser -= value
     }
     this.fetchUsers()
+  }
+
+  public search(query: string) {
+    if (query.length === 0) {
+      this.users = this.usersTemp
+      return
+    }
+
+    this.searchService.search('users', query)
+      .subscribe((res) => {
+        this.users = res
+      })
+  }
+
+  public deleteUser (user: User) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You are about to delete ${user.name}`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.usersService.deleteUser(user)
+          .subscribe({
+            next: (res) => {
+              this.fetchUsers()
+              Swal.fire({
+                title: "Deleted!",
+                text: `User ${user.name} has been deleted.`,
+                icon: "success"
+              });
+            }
+          })
+      }
+    });
+    
   }
 }

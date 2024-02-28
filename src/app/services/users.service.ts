@@ -112,4 +112,9 @@ export class UsersService {
         })
       )
   }
+
+  public deleteUser(user: User) {
+    const url = `${baseUrl}/users/${user.uid}`
+    return this.http.delete(url, this.headers)
+  }
 }
