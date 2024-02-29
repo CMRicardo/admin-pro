@@ -59,10 +59,6 @@ export class UsersService {
   }
 
   public updateProfile = (data: { email: string, name: string, role?: string }) => {
-    data = {
-      ...data,
-      role: this.user.role
-    }
     return this.http.put(`${baseUrl}/users/${this.uid}`, data, this.headers)
   }
 
@@ -103,7 +99,9 @@ export class UsersService {
         map(res => {
           const users = res.users
             .map(
-              ({ name, email, img, google, role, uid }) => new User(name, email, undefined, img, google, role, uid))
+              ({ name, email, img, google, role, uid }) => {
+                return new User(name, email, undefined, img, google, role, uid)
+              })
           return {
             total: res.total,
             users,
@@ -116,5 +114,9 @@ export class UsersService {
   public deleteUser(user: User) {
     const url = `${baseUrl}/users/${user.uid}`
     return this.http.delete(url, this.headers)
+  }
+ 
+  public saveUser = (user: User) => {
+    return this.http.put(`${baseUrl}/users/${user.uid}`, user, this.headers)
   }
 }

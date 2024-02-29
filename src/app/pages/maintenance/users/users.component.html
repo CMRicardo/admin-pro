@@ -50,7 +50,12 @@
                 </td>
                 <td>{{user.email}}</td>
                 <td>{{user.name}}</td>
-                <td>{{user.role}}</td>
+                <td>
+                  <select class="form-control w140" [(ngModel)]="user.role" (change)="changeRole(user)" >
+                    <option value="ADMIN_ROLE">Admin</option>
+                    <option value="USER_ROLE">User</option>
+                  </select>
+                </td>
                 <td>
                   @if (user.google) {
                   <span class="label label-danger">Google</span>
@@ -59,13 +64,6 @@
                   }
                 </td>
                 <td class="text-nowrap text-center">
-                  <a
-                    data-toggle="tooltip"
-                    class="cursor-pointer"
-                    data-original-title="Edit"
-                  >
-                    <i class="fa fa-pencil text-inverse m-r-10"></i>
-                  </a>
                   <a
                     class="cursor-pointer"
                     data-toggle="tooltip"

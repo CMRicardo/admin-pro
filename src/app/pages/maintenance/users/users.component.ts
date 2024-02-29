@@ -87,4 +87,11 @@ export class UsersComponent {
       }
     });
   }
+  public changeRole(user: User) {
+    this.usersService.saveUser(user)
+      .subscribe({
+        next: console.log,
+        error: (err) => Swal.fire('Could not update', err.error.message, 'error')
+      })
+  }
 }
