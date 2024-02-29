@@ -59,7 +59,12 @@ export class UsersComponent {
       })
   }
 
-  public deleteUser (user: User) {
+  public deleteUser(user: User) {
+    if (user.uid === this.usersService.uid) {
+      Swal.fire('Error', "You can't delete yourself", 'error')
+      return
+    }
+
     Swal.fire({
       title: "Are you sure?",
       text: `You are about to delete ${user.name}`,
@@ -70,7 +75,7 @@ export class UsersComponent {
       if (result.isConfirmed) {
         this.usersService.deleteUser(user)
           .subscribe({
-            next: (res) => {
+            next: () => {
               this.fetchUsers()
               Swal.fire({
                 title: "Deleted!",
@@ -81,6 +86,5 @@ export class UsersComponent {
           })
       }
     });
-    
   }
 }
