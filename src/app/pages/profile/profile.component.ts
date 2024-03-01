@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { FileUploadService } from '@services/file-upload.service';
 import { UsersService } from '@services/users.service';
 
-import { User } from '../../models/user.model';
+import { User } from '@models/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -31,12 +31,15 @@ export class ProfileComponent implements OnInit {
 
   public updateProfile() {
     this.usersService.updateProfile(this.profileForm.value)
-      .subscribe((res: any) => {
-        this.user.email = res.user.email
-        this.user.name = res.user.name
-        Swal.fire('Saved!', 'Profile updated', 'success')
-      }, (err) => {
-        Swal.fire('Error', err.error.message, 'error')
+      .subscribe({
+        next: (res: any) => {
+          this.user.email = res.user.email
+          this.user.name = res.user.name
+          Swal.fire('Saved!', 'Profile updated', 'success')
+        },
+        error: (err) => {
+          Swal.fire('Error', err.error.message, 'error')
+        }
       })
   }
 

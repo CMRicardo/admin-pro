@@ -6,6 +6,7 @@ import { User } from '@models/user.model';
 import { UsersService } from '@services/users.service';
 import { SearchService } from '@services/search.service';
 import { ImageModalService } from '@services/image-modal.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -17,6 +18,7 @@ export class UsersComponent {
   private searchService = inject(SearchService)
   private imageModalService = inject(ImageModalService)
 
+  public imgSubscription?: Subscription
   public totalUsers: number = 0
   public users: User[] = []
   public usersTemp: User[] = []
@@ -25,6 +27,12 @@ export class UsersComponent {
 
   ngOnInit(): void {
     this.fetchUsers()
+    this.imgSubscription = this.imageModalService.newImage.subscribe({
+      next: () => this.fetchUsers()
+    })
+  }
+  ngOnDestroy(): void {
+    this.imgSubscription?.unsubscribe()
   }
 
   public fetchUsers() {
