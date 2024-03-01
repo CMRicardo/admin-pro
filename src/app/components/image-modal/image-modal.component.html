@@ -11,6 +11,16 @@
         </div>
         <div class="modal-body">
           <h3>Select an image</h3>
+          <div class="text-center">
+            @if (!imageToUpload) {
+              <img class="w-50" [src]="imageModalService.img" alt="User profile pic">
+            } @else {
+             <img class="w-50" [src]="imgTemp" alt="Temporal image">
+            }
+          </div>
+          <br>
+          <br>
+          <input type="file" (change)="changeImage($event)">
         </div>
         <div class="modal-footer">
           <button (click)="closeModal()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>

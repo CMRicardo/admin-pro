@@ -98,7 +98,7 @@ export class UsersComponent {
   }
 
   public openModal(user: User) {
-    console.log(user);
-    this.imageModalService.openModal()
+    if (!user.uid) return
+    this.imageModalService.openModal('users', user.uid, user.imageUrl)
   }
 }
