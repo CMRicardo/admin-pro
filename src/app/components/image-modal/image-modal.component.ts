@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ImageModalService } from '@services/image-modal.service';
 
 @Component({
   selector: 'app-image-modal',
@@ -6,9 +7,9 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export class ImageModalComponent {
-  public hideModal: boolean = false
+  public imageModalService = inject(ImageModalService)
 
   closeModal () {
-    this.hideModal = true
+    this.imageModalService.closeModal()
   }
 }

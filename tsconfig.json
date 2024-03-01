@@ -3,7 +3,10 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@services/*": ["./src/app/services/*"]
+      "@src/*": ["./src/*"],
+      "@services/*": ["./src/app/services/*"],
+      "@models/*": ["./src/app/models/*"],
+      "@environments/*": ["./src/app/environments/*"],
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

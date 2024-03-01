@@ -2,9 +2,10 @@ import { Component, inject } from '@angular/core';
 
 import Swal from 'sweetalert2';
 
-import { User } from '../../../models/user.model';
+import { User } from '@models/user.model';
 import { UsersService } from '@services/users.service';
 import { SearchService } from '@services/search.service';
+import { ImageModalService } from '@services/image-modal.service';
 
 @Component({
   selector: 'app-users',
@@ -14,6 +15,7 @@ import { SearchService } from '@services/search.service';
 export class UsersComponent {
   private usersService = inject(UsersService)
   private searchService = inject(SearchService)
+  private imageModalService = inject(ImageModalService)
 
   public totalUsers: number = 0
   public users: User[] = []
@@ -93,5 +95,10 @@ export class UsersComponent {
         next: console.log,
         error: (err) => Swal.fire('Could not update', err.error.message, 'error')
       })
+  }
+
+  public openModal(user: User) {
+    console.log(user);
+    this.imageModalService.openModal()
   }
 }
