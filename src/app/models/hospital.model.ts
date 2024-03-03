@@ -1,5 +1,5 @@
 export interface HospitalUser {
-  _id: string
+  id: string
   name: string
   img: string
 }
@@ -7,7 +7,7 @@ export interface HospitalUser {
 export class Hospital {
   constructor(
     public name: string,
-    public _id?: string,
+    public id?: string,
     public user?: HospitalUser,
     public img?: string
   ) {}
