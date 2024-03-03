@@ -29,15 +29,25 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Hospitals - {{ hospitals.length }}</h4>
-        <h6 class="card-subtitle">Registered Hospitals</h6>
+        <div class="row">
+          <div class="col-6">
+            <h4 class="card-title">Hospitals - {{ hospitals.length }}</h4>
+            <h6 class="card-subtitle">Registered Hospitals</h6>
+          </div>
+          <div class="text-right col-6">
+            <button class="btn btn-primary">
+              <i class="fa fa-hospital-o"></i>
+              Create hospital
+            </button>
+          </div>
+        </div>
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead>
               <tr>
                 <th class="w100">Photo</th>
                 <th>Name</th>
-                <th class="text-nowrap">Actions</th>
+                <th class="text-nowrap w100">Actions</th>
               </tr>
             </thead>
             <tbody>
