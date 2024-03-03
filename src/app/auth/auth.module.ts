@@ -1,17 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { HttpClientModule } from '@angular/common/http'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { RouterModule } from '@angular/router'
 
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component'
+import { RegisterComponent } from './register/register.component'
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    RegisterComponent,
-  ],
+  declarations: [LoginComponent, RegisterComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -19,9 +16,6 @@ import { RegisterComponent } from './register/register.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  exports: [
-    LoginComponent,
-    RegisterComponent,
-  ]
+  exports: [LoginComponent, RegisterComponent]
 })
-export class AuthModule { }
+export class AuthModule {}

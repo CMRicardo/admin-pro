@@ -23,22 +23,54 @@ const routes: Routes = [
     children: [
       // Dashboard
       { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
-      { path: 'progress', component: ProgressComponent, data: { title: 'Progress' } },
-      { path: 'chart-1', component: Chart1Component, data: { title: 'Chart 1' } },
-      { path: 'promises', component: PromisesComponent, data: { title: 'Promises' } },
-      { path: 'account-settings', component: AccountSettingsComponent, data: { title: 'Account Settings' } },
+      {
+        path: 'progress',
+        component: ProgressComponent,
+        data: { title: 'Progress' }
+      },
+      {
+        path: 'chart-1',
+        component: Chart1Component,
+        data: { title: 'Chart 1' }
+      },
+      {
+        path: 'promises',
+        component: PromisesComponent,
+        data: { title: 'Promises' }
+      },
+      {
+        path: 'account-settings',
+        component: AccountSettingsComponent,
+        data: { title: 'Account Settings' }
+      },
       { path: 'rxjs', component: RxjsComponent, data: { title: 'Rxjs' } },
-      { path: 'profile', component: ProfileComponent, data: { title: 'User Profile' } },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        data: { title: 'User Profile' }
+      },
       // Maintenance
-      { path: 'users', component: UsersComponent, data: { title: 'Users maintenance' } },
-      { path: 'hospitals', component: HospitalsComponent, data: { title: 'Hospitals maintenance' } },
-      { path: 'doctors', component: DoctorsComponent, data: { title: 'Doctors maintenance' } },
+      {
+        path: 'users',
+        component: UsersComponent,
+        data: { title: 'Users maintenance' }
+      },
+      {
+        path: 'hospitals',
+        component: HospitalsComponent,
+        data: { title: 'Hospitals maintenance' }
+      },
+      {
+        path: 'doctors',
+        component: DoctorsComponent,
+        data: { title: 'Doctors maintenance' }
+      }
     ]
-  },
+  }
 ]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PagesRoutingModule { }
+export class PagesRoutingModule {}
