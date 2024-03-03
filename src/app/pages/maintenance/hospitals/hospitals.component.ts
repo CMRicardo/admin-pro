@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core'
+import { Hospital } from '@src/app/models/hospital.model'
 
 import { HospitalsService } from '@src/app/services/hospitals.service'
 
@@ -10,9 +11,20 @@ import { HospitalsService } from '@src/app/services/hospitals.service'
 export class HospitalsComponent implements OnInit {
   private hospitalsService = inject(HospitalsService)
 
+  public hospitals: Hospital[] = []
+  public isLoading: boolean = true
+
   ngOnInit(): void {
+    this.fetchHospitals()
+  }
+
+  private fetchHospitals() {
+    this.isLoading = true
     this.hospitalsService.fetchHospitals().subscribe({
-      next: hospitals => console.log(hospitals)
+      next: hospitals => {
+        this.hospitals = hospitals
+        this.isLoading = false
+      }
     })
   }
 }

@@ -1,19 +1,19 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 
-import { User } from '@models/user.model';
-import { UsersService } from '@services/users.service';
-import { SearchService } from '@services/search.service';
-import { ImageModalService } from '@services/image-modal.service';
-import { Subscription } from 'rxjs';
+import { User } from '@models/user.model'
+import { UsersService } from '@services/users.service'
+import { SearchService } from '@services/search.service'
+import { ImageModalService } from '@services/image-modal.service'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styles: ``
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit, OnDestroy {
   private usersService = inject(UsersService)
   private searchService = inject(SearchService)
   private imageModalService = inject(ImageModalService)
@@ -37,15 +37,14 @@ export class UsersComponent {
 
   public fetchUsers() {
     this.loading = true
-    this.usersService.fetchUsers(this.fromUser)
-      .subscribe({
-        next: ({ total, users }) => {
-          this.totalUsers = total
-          this.users = users
-          this.usersTemp = users
-          this.loading = false
-        }
-      })
+    this.usersService.fetchUsers(this.fromUser).subscribe({
+      next: ({ total, users }) => {
+        this.totalUsers = total
+        this.users = users
+        this.usersTemp = users
+        this.loading = false
+      }
+    })
   }
 
   public changePage(value: number): void {
@@ -63,10 +62,9 @@ export class UsersComponent {
       return
     }
 
-    this.searchService.search('users', query)
-      .subscribe((res) => {
-        this.users = res
-      })
+    this.searchService.search('users', query).subscribe(res => {
+      this.users = res
+    })
   }
 
   public deleteUser(user: User) {
@@ -76,33 +74,31 @@ export class UsersComponent {
     }
 
     Swal.fire({
-      title: "Are you sure?",
+      title: 'Are you sure?',
       text: `You are about to delete ${user.name}`,
-      icon: "question",
+      icon: 'question',
       showCancelButton: true,
-      confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
+      confirmButtonText: 'Yes, delete it!'
+    }).then(result => {
       if (result.isConfirmed) {
-        this.usersService.deleteUser(user)
-          .subscribe({
-            next: () => {
-              this.fetchUsers()
-              Swal.fire({
-                title: "Deleted!",
-                text: `User ${user.name} has been deleted.`,
-                icon: "success"
-              });
-            }
-          })
+        this.usersService.deleteUser(user).subscribe({
+          next: () => {
+            this.fetchUsers()
+            Swal.fire({
+              title: 'Deleted!',
+              text: `User ${user.name} has been deleted.`,
+              icon: 'success'
+            })
+          }
+        })
       }
-    });
+    })
   }
   public changeRole(user: User) {
-    this.usersService.saveUser(user)
-      .subscribe({
-        next: console.log,
-        error: (err) => Swal.fire('Could not update', err.error.message, 'error')
-      })
+    this.usersService.saveUser(user).subscribe({
+      next: console.log,
+      error: err => Swal.fire('Could not update', err.error.message, 'error')
+    })
   }
 
   public openModal(user: User) {
