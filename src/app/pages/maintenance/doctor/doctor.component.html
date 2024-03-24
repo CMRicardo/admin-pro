@@ -9,6 +9,7 @@
           class="form-horizontal p-t-20"
           (ngSubmit)="saveDoctor()"
         >
+          @if (currentDoctor) {
           <div class="form-group row">
             <label
               for="exampleInputuname3"
@@ -19,13 +20,14 @@
             <div class="col-sm-9">
               <div class="input-group">
                 <img
-                  src="http://localhost:3000/api/uploads/doctors/e3699437-efee-406f-aa06-a3f340b7f734.jpg"
+                  [src]="currentDoctor.img ?? '' | image : 'doctors'"
                   class="w140"
                   alt=""
                 />
               </div>
             </div>
           </div>
+          }
           <div class="form-group row">
             <label
               for="exampleInputuname3"

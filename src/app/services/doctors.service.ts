@@ -35,7 +35,7 @@ export class DoctorsService {
       .pipe(map(res => res.doctors))
   }
 
-  public createDoctor(doctor: Doctor) {
+  public createDoctor(doctor: { name: string; hospital: string }) {
     const url = `${baseUrl}/doctors`
     return this.http.post<CreateDoctorResponse>(url, doctor, this.headers)
   }
