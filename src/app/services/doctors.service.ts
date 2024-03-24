@@ -43,7 +43,7 @@ export class DoctorsService {
     const url = `${baseUrl}/doctors/${doctor.id}`
     return this.http.put(url, doctor, this.headers)
   }
-  public deleteDoctors(id: string) {
+  public deleteDoctor(id: string) {
     const url = `${baseUrl}/doctors/${id}`
     return this.http.delete(url, this.headers)
   }

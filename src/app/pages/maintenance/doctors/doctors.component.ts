@@ -4,6 +4,7 @@ import { DoctorsService } from '@src/app/services/doctors.service'
 import { ImageModalService } from '@src/app/services/image-modal.service'
 import { SearchService } from '@src/app/services/search.service'
 import { Subscription } from 'rxjs'
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-doctors',
@@ -53,5 +54,15 @@ export class DoctorsComponent implements OnInit, OnDestroy {
   public openModal(doctor: Doctor) {
     if (!doctor.id) return
     this.imageModalService.openModal('doctors', doctor.id, doctor.img)
+  }
+
+  public deleteDoctor(doctor: Doctor) {
+    if (!doctor.id) return
+    this.doctorsService.deleteDoctor(doctor.id).subscribe({
+      next: () => {
+        this.fetchDoctors()
+        Swal.fire('Deleted', doctor.name, 'success')
+      }
+    })
   }
 }
