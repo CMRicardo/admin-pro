@@ -84,17 +84,19 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-6">
+  @if (currentHospital) {
+  <div class="col-lg-6 animated fast fadeIn">
     <div class="card">
       <div class="card-body">
         <div class="card-title">Hospital</div>
-        <div class="card-subtitle">Current Hospital</div>
+        <div class="card-subtitle">{{ currentHospital.name }}</div>
         <img
-          src="http://localhost:3000/api/uploads/doctors/e3699437-efee-406f-aa06-a3f340b7f734.jpg"
+          [src]="currentHospital.img ?? '' | image : 'hospitals'"
           alt=""
-          class="w-100"
+          class="img-thumbnail"
         />
       </div>
     </div>
   </div>
+  }
 </div>

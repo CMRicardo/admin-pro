@@ -14,6 +14,7 @@ export class DoctorComponent implements OnInit {
 
   public doctorForm!: FormGroup
   public hospitals: Hospital[] = []
+  public currentHospital: Hospital | undefined
 
   ngOnInit(): void {
     this.doctorForm = this.formBuilder.group({
@@ -22,6 +23,14 @@ export class DoctorComponent implements OnInit {
     })
 
     this.fetchHospitals()
+    this.doctorForm.get('hospital')?.valueChanges.subscribe({
+      next: hospitalId => {
+        this.currentHospital = this.hospitals.find(
+          hospital => hospital.id === hospitalId
+        )
+        console.log(this.currentHospital)
+      }
+    })
   }
 
   public fetchHospitals() {
