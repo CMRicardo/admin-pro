@@ -6,6 +6,8 @@
           type="text"
           class="form-control"
           placeholder="Search hospital..."
+          #txtQuery
+          (keyup)="search(txtQuery.value)"
         />
       </div>
     </div>

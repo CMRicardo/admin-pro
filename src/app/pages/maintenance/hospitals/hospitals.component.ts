@@ -6,6 +6,7 @@ import { Hospital } from '@src/app/models/hospital.model'
 
 import { HospitalsService } from '@src/app/services/hospitals.service'
 import { ImageModalService } from '@src/app/services/image-modal.service'
+import { SearchService } from '@src/app/services/search.service'
 
 @Component({
   selector: 'app-hospitals',
@@ -15,9 +16,11 @@ import { ImageModalService } from '@src/app/services/image-modal.service'
 export class HospitalsComponent implements OnInit, OnDestroy {
   private hospitalsService = inject(HospitalsService)
   private imageModalService = inject(ImageModalService)
+  private searchService = inject(SearchService)
 
   public imgSubscription?: Subscription
   public hospitals: Hospital[] = []
+  public hospitalsTemp: Hospital[] = []
   public isLoading: boolean = true
 
   ngOnInit(): void {
@@ -35,6 +38,7 @@ export class HospitalsComponent implements OnInit, OnDestroy {
     this.hospitalsService.fetchHospitals().subscribe({
       next: hospitals => {
         this.hospitals = hospitals
+        this.hospitalsTemp = hospitals
         this.isLoading = false
       }
     })
@@ -58,16 +62,26 @@ export class HospitalsComponent implements OnInit, OnDestroy {
     })
   }
 
+  public search(query: string) {
+    if (query.length === 0) {
+      this.hospitals = this.hospitalsTemp
+      return
+    }
+    this.searchService.search('hospitals', query).subscribe({
+      next: hospitals => (this.hospitals = hospitals)
+    })
+  }
+
   public async openSwal() {
-    const { value } = await Swal.fire<string>({
+    const { value = '' } = await Swal.fire<string>({
       title: 'New Hospital',
       text: 'Enter the new hospital name',
       input: 'text',
       inputPlaceholder: 'Hospital',
       showCancelButton: true
     })
-    if (!value) return
-    if (value?.trim().length > 0) {
+
+    if (value.trim().length > 0) {
       this.hospitalsService.createHospital(value).subscribe({
         next: res => {
           this.hospitals.push(res.hospital)

@@ -62,8 +62,8 @@ export class UsersComponent implements OnInit, OnDestroy {
       return
     }
 
-    this.searchService.search('users', query).subscribe(res => {
-      this.users = res
+    this.searchService.search('users', query).subscribe({
+      next: users => (this.users = users as User[])
     })
   }
 
