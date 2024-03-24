@@ -1,5 +1,5 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { environment } from '@src/environments/environment';
+import { EventEmitter, Injectable } from '@angular/core'
+import { environment } from '@src/environments/environment'
 
 const baseUrl = environment.baseUrl
 
@@ -9,7 +9,7 @@ const baseUrl = environment.baseUrl
 export class ImageModalService {
   private _hideModal: boolean = true
 
-  public type: 'users' | 'doctors' | 'hospitals' = 'users'
+  public type!: 'users' | 'doctors' | 'hospitals'
   public id: string = ''
   public img: string = ''
 
@@ -26,11 +26,13 @@ export class ImageModalService {
   ) {
     this.type = type
     this.id = id
+    console.log(img)
+
     if (img.includes('http')) {
       this.img = img
     } else {
       // http://localhost:3000/api/uploads/users/39271a69-b71c-44fc-b616-dcb25bcc1ed8.jpg
-      this.img = `${baseUrl}/uploads/${type}/${id}`
+      this.img = `${baseUrl}/uploads/${type}/${id}.jpg`
     }
     this._hideModal = false
   }

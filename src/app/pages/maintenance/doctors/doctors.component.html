@@ -1,1 +1,103 @@
-<p>doctors works!</p>
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search doctor..."
+          #txtQuery
+          (keyup)="search(txtQuery.value)"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+@if (isLoading) {
+
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div
+      class="alert alert-info text-center"
+      role="alert"
+    >
+      <h4 class="alert-heading">Loading...</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p class="mb-0">Please be patient</p>
+    </div>
+  </div>
+</div>
+} @else {
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-6">
+            <h4 class="card-title">Doctors - {{ doctors.length }}</h4>
+            <h6 class="card-subtitle">Registered Doctors</h6>
+          </div>
+          <div class="text-right col-6">
+            <a
+              class="btn btn-primary"
+              routerLink="/dashboard/doctors/new"
+            >
+              <i class="fa fa-hospital-o"></i>
+              Create doctor
+            </a>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Profile pic</th>
+                <th>Name</th>
+                <th class="text-nowrap">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (doctor of doctors; track $index) {
+              <tr>
+                <td class="w100">
+                  <button
+                    class="bg-transparent btn w100"
+                    (click)="openModal(doctor)"
+                  >
+                    <img
+                      class="img-circle cursor-pointer w-100"
+                      [src]="doctor.img ?? '' | image : 'doctors'"
+                      [alt]="doctor.name"
+                    />
+                  </button>
+                </td>
+                <td class="align-middle">{{ doctor.name }}</td>
+                <td class="w100 text-nowrap align-middle">
+                  <a
+                    [routerLink]="['/dashboard/doctors', doctor.id]"
+                    data-toggle="tooltip"
+                    data-original-title="Edit"
+                  >
+                    <i class="fa fa-pencil text-inverse m-r-10"></i>
+                  </a>
+                  <a
+                    href="#"
+                    data-toggle="tooltip"
+                    data-original-title="Delete"
+                  >
+                    <i class="fa fa-close text-danger"></i>
+                  </a>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <!-- <div class="btn btn-secondary">Previous</div>
+        &nbsp;
+        <div class="btn btn-secondary">Next</div> -->
+      </div>
+    </div>
+  </div>
+</div>
+}

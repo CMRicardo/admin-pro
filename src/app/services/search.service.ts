@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { environment } from '@src/environments/environment'
-import { map } from 'rxjs'
+import { Observable, map } from 'rxjs'
 import { User } from '@src/app/models/user.model'
 import { Hospital } from '@src/app/models/hospital.model'
+import { Doctor } from '../models/doctor.model'
 
 const baseUrl = environment.baseUrl
 
@@ -36,7 +37,16 @@ export class SearchService {
     })
   }
 
-  public search(type: 'users' | 'hospitals' | 'doctors', query: string) {
+  private transformDoctors(res: any[]): Doctor[] {
+    return res.map(({ name, id, user, img, hospital }) => {
+      return new Doctor(name, id, user, img, hospital)
+    })
+  }
+
+  public search(
+    type: 'users' | 'hospitals' | 'doctors',
+    query: string
+  ): Observable<Doctor[] | Hospital[] | User[]> {
     const url = `${baseUrl}/all/collection/${type}/${query}`
     return this.http.get<any[]>(url, this.headers).pipe(
       map((res: any) => {
@@ -45,6 +55,8 @@ export class SearchService {
             return this.transformUsers(res.results)
           case 'hospitals':
             return this.transformHospitals(res.results)
+          case 'doctors':
+            return this.transformDoctors(res.results)
           default:
             return []
         }
