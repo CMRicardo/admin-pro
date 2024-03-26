@@ -1,13 +1,15 @@
 import { Component, OnInit, inject } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
+
+import Swal from 'sweetalert2'
 
 import { Doctor } from '@src/app/models/doctor.model'
 import { Hospital } from '@src/app/models/hospital.model'
 
 import { DoctorsService } from '@src/app/services/doctors.service'
 import { HospitalsService } from '@src/app/services/hospitals.service'
-import Swal from 'sweetalert2'
+import { delay } from 'rxjs'
 
 @Component({
   selector: 'app-doctor',
@@ -19,6 +21,7 @@ export class DoctorComponent implements OnInit {
   private hospitalsService = inject(HospitalsService)
   private doctorsService = inject(DoctorsService)
   private router = inject(Router)
+  private activatedRoute = inject(ActivatedRoute)
 
   public doctorForm!: FormGroup
   public hospitals: Hospital[] = []
@@ -26,6 +29,10 @@ export class DoctorComponent implements OnInit {
   public currentDoctor: Doctor | undefined
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe({
+      next: ({ id }) => this.fetchDoctor(id)
+    })
+
     this.doctorForm = this.formBuilder.group({
       name: ['', Validators.required],
       hospital: ['', Validators.required]
@@ -41,7 +48,26 @@ export class DoctorComponent implements OnInit {
     })
   }
 
-  public fetchHospitals() {
+  private fetchDoctor(id: string) {
+    if (id === 'new') return
+
+    this.doctorsService
+      .getDoctorById(id)
+      .pipe(delay(100))
+      .subscribe({
+        next: doctor => {
+          this.currentDoctor = doctor
+          const { name } = doctor
+          const hospital = doctor.hospital?._id
+          this.doctorForm.setValue({ name, hospital })
+        },
+        error: () => {
+          this.router.navigateByUrl('/dashboard/doctors')
+        }
+      })
+  }
+
+  private fetchHospitals() {
     this.hospitalsService.fetchHospitals().subscribe({
       next: hospitals => (this.hospitals = hospitals)
     })
@@ -49,11 +75,25 @@ export class DoctorComponent implements OnInit {
 
   public saveDoctor() {
     const { name } = this.doctorForm.value
-    this.doctorsService.createDoctor(this.doctorForm.value).subscribe({
-      next: res => {
-        Swal.fire('Saved', `${name} saved succesfully`, 'success')
-        this.router.navigateByUrl(`/dashboard/doctors/${res.doctor.id}`)
+
+    if (this.currentDoctor) {
+      // Update
+      const data = {
+        ...this.doctorForm.value,
+        id: this.currentDoctor.id
       }
-    })
+      this.doctorsService.updateDoctor(data).subscribe({
+        next: () => {
+          Swal.fire('Updated', `${name} updated succesfully`, 'success')
+        }
+      })
+    } else {
+      this.doctorsService.createDoctor(this.doctorForm.value).subscribe({
+        next: res => {
+          Swal.fire('Saved', `${name} saved succesfully`, 'success')
+          this.router.navigateByUrl(`/dashboard/doctors/${res.doctor.id}`)
+        }
+      })
+    }
   }
 }

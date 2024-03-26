@@ -8,6 +8,7 @@ export class Hospital {
   constructor(
     public name: string,
     public id?: string,
+    public _id?: string,
     public user?: HospitalUser,
     public img?: string
   ) {}

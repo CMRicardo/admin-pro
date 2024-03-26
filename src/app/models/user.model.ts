@@ -1,16 +1,16 @@
-import { environment } from '../../environments/environment'
+import { environment } from '@src/environments/environment'
 const BASE_URL = environment.baseUrl
 
 export class User {
-  constructor (
+  constructor(
     public name: string,
     public email: string,
     public password?: string,
     public img?: string,
     public google?: boolean,
     public role?: string,
-    public uid?: string,
-  ) { }
+    public uid?: string
+  ) {}
 
   get imageUrl() {
     if (this.img?.includes('http')) return this.img

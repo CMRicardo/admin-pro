@@ -7,6 +7,7 @@ import { environment } from '@src/environments/environment'
 import { DoctorsResponse } from '../interfaces/fetch-doctors.interface'
 import { CreateDoctorResponse } from '../interfaces/create-doctor.interface'
 import { Doctor } from '../models/doctor.model'
+import { DoctorByIdResponse } from '../interfaces/fetch-doctor.interface'
 
 const baseUrl = environment.baseUrl
 
@@ -33,6 +34,13 @@ export class DoctorsService {
     return this.http
       .get<DoctorsResponse>(url, this.headers)
       .pipe(map(res => res.doctors))
+  }
+
+  public getDoctorById(id: string) {
+    const url = `${baseUrl}/doctors/${id}`
+    return this.http
+      .get<DoctorByIdResponse>(url, this.headers)
+      .pipe(map(res => res.doctor))
   }
 
   public createDoctor(doctor: { name: string; hospital: string }) {
