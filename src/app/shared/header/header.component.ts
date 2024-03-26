@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core'
+import { Router } from '@angular/router'
 
 import { UsersService } from '@app/services/users.service'
-import { SearchService } from '@app/services/search.service'
 
 @Component({
   selector: 'app-header',
@@ -10,7 +10,7 @@ import { SearchService } from '@app/services/search.service'
 })
 export class HeaderComponent {
   private usersService = inject(UsersService)
-  private searchService = inject(SearchService)
+  private router = inject(Router)
 
   public user = this.usersService.user
 
@@ -18,8 +18,8 @@ export class HeaderComponent {
     this.usersService.logout()
   }
 
-  public search(value: string) {
-    if (value.length === 0) return
-    console.log(value)
+  public search(query: string) {
+    if (query.length === 0) return
+    this.router.navigateByUrl(`/dashboard/search/${query}`)
   }
 }

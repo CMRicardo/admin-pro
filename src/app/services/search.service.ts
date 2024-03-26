@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { environment } from '@environments/environment'
 import { Observable, map } from 'rxjs'
+
+import { environment } from '@environments/environment'
+
 import { User } from '@app/models/user.model'
 import { Hospital } from '@app/models/hospital.model'
-import { Doctor } from '../models/doctor.model'
+import { Doctor } from '@app/models/doctor.model'
+import { GlobalSearchResponse } from '@app/interfaces/global-search.interface'
 
 const baseUrl = environment.baseUrl
 
@@ -23,6 +26,11 @@ export class SearchService {
         'x-token': this.token
       }
     }
+  }
+
+  public globalSearch(query: string) {
+    const url = `${baseUrl}/all/${query}`
+    return this.http.get<GlobalSearchResponse>(url, this.headers)
   }
 
   private transformUsers(res: any[]): User[] {

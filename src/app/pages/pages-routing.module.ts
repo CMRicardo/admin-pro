@@ -15,6 +15,7 @@ import { UsersComponent } from './maintenance/users/users.component'
 import { HospitalsComponent } from './maintenance/hospitals/hospitals.component'
 import { DoctorsComponent } from './maintenance/doctors/doctors.component'
 import { DoctorComponent } from './maintenance/doctor/doctor.component'
+import { SearchComponent } from './search/search.component'
 
 const routes: Routes = [
   {
@@ -49,6 +50,11 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         data: { title: 'User Profile' }
+      },
+      {
+        path: 'search/:query',
+        component: SearchComponent,
+        data: { title: 'Search' }
       },
       // Maintenance
       {
