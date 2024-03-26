@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { environment } from '@src/environments/environment'
+import { environment } from '@environments/environment'
 import { Observable, map } from 'rxjs'
-import { User } from '@src/app/models/user.model'
-import { Hospital } from '@src/app/models/hospital.model'
+import { User } from '@app/models/user.model'
+import { Hospital } from '@app/models/hospital.model'
 import { Doctor } from '../models/doctor.model'
 
 const baseUrl = environment.baseUrl

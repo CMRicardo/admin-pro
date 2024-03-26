@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core'
 
 import { map } from 'rxjs'
 
-import { environment } from '@src/environments/environment'
+import { environment } from '@environments/environment'
 
 import { HospitalsResponse } from '../interfaces/fetch-hospitals.interface'
 import { CreateHospitalResponse } from '../interfaces/create-hospital.interface'

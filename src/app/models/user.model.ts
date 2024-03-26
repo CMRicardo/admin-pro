@@ -1,4 +1,4 @@
-import { environment } from '@src/environments/environment'
+import { environment } from '@environments/environment'
 const BASE_URL = environment.baseUrl
 
 export class User {

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs'
 
-import { environment } from '@src/environments/environment'
+import { environment } from '@environments/environment'
 
 import { DoctorsResponse } from '../interfaces/fetch-doctors.interface'
 import { CreateDoctorResponse } from '../interfaces/create-doctor.interface'

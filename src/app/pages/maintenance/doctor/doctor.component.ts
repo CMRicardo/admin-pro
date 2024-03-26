@@ -4,11 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router'
 
 import Swal from 'sweetalert2'
 
-import { Doctor } from '@src/app/models/doctor.model'
-import { Hospital } from '@src/app/models/hospital.model'
+import { Doctor } from '@app/models/doctor.model'
+import { Hospital } from '@app/models/hospital.model'
 
-import { DoctorsService } from '@src/app/services/doctors.service'
-import { HospitalsService } from '@src/app/services/hospitals.service'
+import { DoctorsService } from '@app/services/doctors.service'
+import { HospitalsService } from '@app/services/hospitals.service'
 import { delay } from 'rxjs'
 
 @Component({

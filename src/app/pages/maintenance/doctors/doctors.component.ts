@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { Doctor } from '@src/app/models/doctor.model'
-import { DoctorsService } from '@src/app/services/doctors.service'
-import { ImageModalService } from '@src/app/services/image-modal.service'
-import { SearchService } from '@src/app/services/search.service'
+
 import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
+
+import { Doctor } from '@app/models/doctor.model'
+import { DoctorsService } from '@app/services/doctors.service'
+import { ImageModalService } from '@app/services/image-modal.service'
+import { SearchService } from '@app/services/search.service'
 
 @Component({
   selector: 'app-doctors',
