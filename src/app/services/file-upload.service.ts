@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { Injectable } from '@angular/core'
+import { environment } from '../../environments/environment'
 
 const baseURL = environment.baseUrl
 
@@ -7,7 +7,6 @@ const baseURL = environment.baseUrl
   providedIn: 'root'
 })
 export class FileUploadService {
-
   public async updateImage(
     file: File,
     type: 'users' | 'doctors' | 'hospitals',
@@ -25,10 +24,9 @@ export class FileUploadService {
       })
       const data = await response.json()
       if (data.ok) return data.fileName
-      console.log(data.message)
       return false
     } catch (error) {
-      console.log(error);
+      console.log(error)
       return false
     }
   }

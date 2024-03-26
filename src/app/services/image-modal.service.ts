@@ -26,7 +26,6 @@ export class ImageModalService {
   ) {
     this.type = type
     this.id = id
-    console.log(img)
 
     if (img.includes('http')) {
       this.img = img

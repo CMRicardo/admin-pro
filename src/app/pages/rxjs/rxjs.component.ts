@@ -1,5 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Observable, Subscription, filter, interval, map, take } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core'
+import { Observable, Subscription, filter, interval, map } from 'rxjs'
 
 @Component({
   selector: 'app-rxjs',
@@ -8,42 +8,30 @@ import { Observable, Subscription, filter, interval, map, take } from 'rxjs';
 })
 export class RxjsComponent implements OnDestroy {
   public intervalDesuscription: Subscription
-  constructor () {
-    this.intervalDesuscription = this.returnsInterval()
-      .subscribe({
-        next: console.log
-      })
-    // this.returnsObservable()
-    // .pipe(
-    //   retry(1)
-    // )
-    // .subscribe({
-    //     next: value => console.log('Subs: ', value),
-    //     error: err => console.warn('Error: ', err),
-    //     complete: () => console.info('Completed!!!')
-    //   })
+  constructor() {
+    this.intervalDesuscription = this.returnsInterval().subscribe({
+      next: console.log
+    })
   }
   ngOnDestroy(): void {
     this.intervalDesuscription.unsubscribe()
   }
 
-  public returnsInterval (): Observable<number> {
-    return interval(500)
-      .pipe(
-        map(value => 1 + value),
-        filter(value => value % 2 === 0),
-        // take(10),
-      )
+  public returnsInterval(): Observable<number> {
+    return interval(500).pipe(
+      map(value => 1 + value),
+      filter(value => value % 2 === 0)
+    )
   }
 
-  public returnsObservable (): Observable<number> {
+  public returnsObservable(): Observable<number> {
     let i = 0
     return new Observable<number>(observable => {
-      const interval = setInterval(():void => {
+      const interval = setInterval((): void => {
         i++
         observable.next(i)
-        if ( i === 4 ) {
-          clearInterval( interval )
+        if (i === 4) {
+          clearInterval(interval)
           observable.complete()
         }
         if (i === 2) {
