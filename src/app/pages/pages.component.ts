@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { SettingsService } from '../services/settings.service';
+import { Component, OnInit, inject } from '@angular/core'
+import { SettingsService } from '../services/settings.service'
+import { SidebarService } from '@app/services/sidebar.service'
 
 declare function customInit(): void
 
@@ -8,9 +9,13 @@ declare function customInit(): void
   templateUrl: './pages.component.html',
   styles: ``
 })
-export class PagesComponent {
+export class PagesComponent implements OnInit {
   private settingsService = inject(SettingsService)
+  private sidebarService = inject(SidebarService)
+
   ngOnInit(): void {
     customInit()
+    this.sidebarService.loadMenu()
+    console.log(this.sidebarService.menu)
   }
 }

@@ -12,7 +12,7 @@ import { Router } from '@angular/router'
 import Swal from 'sweetalert2'
 
 import { UsersService } from '@app/services/users.service'
-import { LoginForm } from '../../interfaces/login-form.interface'
+import { LoginForm } from '@app/interfaces/login-form.interface'
 
 declare const google: any
 

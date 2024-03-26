@@ -35,30 +35,40 @@ export class UsersService {
     }
   }
 
-  public validateToken = (): Observable<boolean> => {
-    return this.http.get(`${baseUrl}/auth/renew`, {
-      headers: { 'x-token': this.token }
-    }).pipe(
-      map((res: any) => {
-        const { email, name, role, google, img = '', uid } = res.user
-        this.user = new User(name, email, '', img, google, role, uid)
-        localStorage.setItem('token', res.token)
-        return true
-      }),
-      catchError(err => of(false))
-    )
+  private saveToLocalStorage = (token: string, menu: []) => {
+    localStorage.setItem('token', token)
+    localStorage.setItem('menu', JSON.stringify(menu))
   }
 
-  public createUser = (formData: RegisterForm) => {
-    return this.http.post(`${baseUrl}/users`, formData)
+  public validateToken = (): Observable<boolean> => {
+    return this.http
+      .get(`${baseUrl}/auth/renew`, {
+        headers: { 'x-token': this.token }
+      })
       .pipe(
-        tap(
-          (res: any) => localStorage.setItem('token', res.token)
-        )
+        map((res: any) => {
+          const { email, name, role, google, img = '', uid } = res.user
+          this.user = new User(name, email, '', img, google, role, uid)
+          this.saveToLocalStorage(res.token, res.menu)
+          return true
+        }),
+        catchError(err => of(false))
       )
   }
 
-  public updateProfile = (data: { email: string, name: string, role?: string }) => {
+  public createUser = (formData: RegisterForm) => {
+    return this.http.post(`${baseUrl}/users`, formData).pipe(
+      tap((res: any) => {
+        this.saveToLocalStorage(res.token, res.menu)
+      })
+    )
+  }
+
+  public updateProfile = (data: {
+    email: string
+    name: string
+    role?: string
+  }) => {
     data = {
       ...data,
       role: this.user.role
@@ -67,27 +77,24 @@ export class UsersService {
   }
 
   public loginUser = (formData: LoginForm) => {
-    return this.http.post(`${baseUrl}/auth`, formData)
-      .pipe(
-        tap(
-          (res: any) => localStorage.setItem('token', res.token)
-        )
-      )
+    return this.http.post(`${baseUrl}/auth`, formData).pipe(
+      tap((res: any) => {
+        this.saveToLocalStorage(res.token, res.menu)
+      })
+    )
   }
 
   public loginGoogle = (token: string) => {
-    return this.http.post(`${baseUrl}/auth/google`, { token })
-      .pipe(
-        tap(
-          (res: any) => {
-            localStorage.setItem('token', res.token)
-          }
-        )
-      )
+    return this.http.post(`${baseUrl}/auth/google`, { token }).pipe(
+      tap((res: any) => {
+        this.saveToLocalStorage(res.token, res.menu)
+      })
+    )
   }
 
   public logout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('menu')
     if (this.user.google) {
       google.accounts.id.revoke(this.user.email, () => {
         this.router.navigateByUrl('/login')
@@ -98,28 +105,27 @@ export class UsersService {
 
   public fetchUsers = (from: number = 0) => {
     const url = `${baseUrl}/users?from=${from}`
-    return this.http.get<UsersResponse>(url, this.headers)
-      .pipe(
-        map(res => {
-          const users = res.users
-            .map(
-              ({ name, email, img, google, role, uid }) => {
-                return new User(name, email, undefined, img, google, role, uid)
-              })
-          return {
-            total: res.total,
-            users,
-            ok: res.ok
+    return this.http.get<UsersResponse>(url, this.headers).pipe(
+      map(res => {
+        const users = res.users.map(
+          ({ name, email, img, google, role, uid }) => {
+            return new User(name, email, undefined, img, google, role, uid)
           }
-        })
-      )
+        )
+        return {
+          total: res.total,
+          users,
+          ok: res.ok
+        }
+      })
+    )
   }
 
   public deleteUser(user: User) {
     const url = `${baseUrl}/users/${user.uid}`
     return this.http.delete(url, this.headers)
   }
- 
+
   public saveUser = (user: User) => {
     return this.http.put(`${baseUrl}/users/${user.uid}`, user, this.headers)
   }

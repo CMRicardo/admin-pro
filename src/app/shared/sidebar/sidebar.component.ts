@@ -8,9 +8,8 @@ import { UsersService } from '@app/services/users.service'
   styles: ``
 })
 export class SidebarComponent {
-  private sidebarService = inject(SidebarService)
+  public sidebarService = inject(SidebarService)
   private usersService = inject(UsersService)
 
-  public menuItems = this.sidebarService.menu
   public user = this.usersService.user
 }
