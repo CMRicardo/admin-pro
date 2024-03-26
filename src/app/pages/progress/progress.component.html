@@ -7,7 +7,7 @@
           <div
             class="progress-bar bg-primary progress-bar-striped active"
             role="progressbar"
-            style="height:5px;"
+            style="height: 5px"
             [style.width]="percentage1"
           ></div>
         </div>
@@ -15,7 +15,7 @@
           <div
             class="progress-bar bg-info progress-bar-striped active"
             role="progressbar"
-            style="height:5px;"
+            style="height: 5px"
             [style.width]="percentage2"
           ></div>
         </div>
@@ -30,7 +30,7 @@
       <div class="card-body">
         <app-incrementator
           [value]="progress1"
-          (onChangeValue)="progress1 = $event"
+          (ChangedValue)="progress1 = $event"
         />
       </div>
     </div>
@@ -41,7 +41,7 @@
         <app-incrementator
           btnClass="btn-info"
           [value]="progress2"
-          (onChangeValue)="progress2 = $event"
+          (ChangedValue)="progress2 = $event"
         />
       </div>
     </div>
