@@ -20,5 +20,6 @@ export class HeaderComponent {
 
   public search(value: string) {
     if (value.length === 0) return
+    console.log(value)
   }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { SettingsService } from '@services/settings.service';
+import { Component, OnInit, inject } from '@angular/core'
+import { SettingsService } from '@app/services/settings.service'
 
 @Component({
   selector: 'app-account-settings',
@@ -8,7 +8,7 @@ import { SettingsService } from '@services/settings.service';
 })
 export class AccountSettingsComponent implements OnInit {
   private settingsService = inject(SettingsService)
-  
+
   ngOnInit(): void {
     this.settingsService.checkCurrentTheme()
   }

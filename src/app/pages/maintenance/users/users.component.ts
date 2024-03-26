@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 
 import Swal from 'sweetalert2'
 
-import { User } from '@models/user.model'
-import { UsersService } from '@services/users.service'
-import { SearchService } from '@services/search.service'
-import { ImageModalService } from '@services/image-modal.service'
+import { User } from '@app/models/user.model'
+import { UsersService } from '@app/services/users.service'
+import { SearchService } from '@app/services/search.service'
+import { ImageModalService } from '@app/services/image-modal.service'
 import { Subscription } from 'rxjs'
 
 @Component({

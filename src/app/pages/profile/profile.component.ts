@@ -1,16 +1,16 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 
-import { FileUploadService } from '@services/file-upload.service';
-import { UsersService } from '@services/users.service';
+import { FileUploadService } from '@app/services/file-upload.service'
+import { UsersService } from '@app/services/users.service'
 
-import { User } from '@models/user.model';
+import { User } from '@app/models/user.model'
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html',
+  templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit {
   private formBuilder = inject(FormBuilder)
@@ -30,17 +30,16 @@ export class ProfileComponent implements OnInit {
   }
 
   public updateProfile() {
-    this.usersService.updateProfile(this.profileForm.value)
-      .subscribe({
-        next: (res: any) => {
-          this.user.email = res.user.email
-          this.user.name = res.user.name
-          Swal.fire('Saved!', 'Profile updated', 'success')
-        },
-        error: (err) => {
-          Swal.fire('Error', err.error.message, 'error')
-        }
-      })
+    this.usersService.updateProfile(this.profileForm.value).subscribe({
+      next: (res: any) => {
+        this.user.email = res.user.email
+        this.user.name = res.user.name
+        Swal.fire('Saved!', 'Profile updated', 'success')
+      },
+      error: err => {
+        Swal.fire('Error', err.error.message, 'error')
+      }
+    })
   }
 
   public changeImage(event: Event) {

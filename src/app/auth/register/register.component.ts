@@ -4,7 +4,7 @@ import { Router } from '@angular/router'
 
 import Swal from 'sweetalert2'
 
-import { UsersService } from '@services/users.service'
+import { UsersService } from '@app/services/users.service'
 
 @Component({
   selector: 'app-register',
@@ -21,7 +21,7 @@ export class RegisterComponent {
     return (formGroup: FormGroup) => {
       const passwordControl = formGroup.get(passwordName)
       const confirmationControl = formGroup.get(confirmationName)
-      if (Boolean(passwordControl!.value === confirmationControl!.value)) {
+      if (passwordControl!.value === confirmationControl!.value) {
         confirmationControl?.setErrors(null)
       } else {
         confirmationControl?.setErrors({ notEqualPass: true })
@@ -29,34 +29,39 @@ export class RegisterComponent {
     }
   }
 
-  public registerForm = this.formBuilder.group({
-    name: ['Ricardo', [Validators.required]],
-    email: ['test100@email.com', [Validators.required, Validators.email]],
-    password: ['Admin123', [Validators.required, Validators.pattern(this.passwordRegex)]],
-    passwordConfirm: ['Admin123', [Validators.required]],
-    terms: [true, [Validators.requiredTrue]],
-  }, {
-    validators: this.equalPasswords('password', 'passwordConfirm')
-  })
+  public registerForm = this.formBuilder.group(
+    {
+      name: ['Ricardo', [Validators.required]],
+      email: ['test100@email.com', [Validators.required, Validators.email]],
+      password: [
+        'Admin123',
+        [Validators.required, Validators.pattern(this.passwordRegex)]
+      ],
+      passwordConfirm: ['Admin123', [Validators.required]],
+      terms: [true, [Validators.requiredTrue]]
+    },
+    {
+      validators: this.equalPasswords('password', 'passwordConfirm')
+    }
+  )
 
   public createUser = () => {
     if (this.registerForm.invalid) return
 
-    this.usersService.createUser(this.registerForm.value)
-      .subscribe({
-        next: res => {
-          this.router.navigateByUrl('/dashboard')
-        },
-        error: err => {
-          Swal.fire('Error', err.error.message, 'error')
-        }
-      })
+    this.usersService.createUser(this.registerForm.value).subscribe({
+      next: res => {
+        this.router.navigateByUrl('/dashboard')
+      },
+      error: err => {
+        Swal.fire('Error', err.error.message, 'error')
+      }
+    })
   }
 
   public notValidField = (field: string): boolean => {
     return Boolean(
       this.registerForm.get(field)?.invalid &&
-      this.registerForm.get(field)?.touched
+        this.registerForm.get(field)?.touched
     )
   }
 

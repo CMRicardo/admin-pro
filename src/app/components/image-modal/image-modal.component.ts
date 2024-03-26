@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core'
 
-import { ImageModalService } from '@services/image-modal.service';
-import { FileUploadService } from '@services/file-upload.service';
-import Swal from 'sweetalert2';
+import { ImageModalService } from '@app/services/image-modal.service'
+import { FileUploadService } from '@app/services/file-upload.service'
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-image-modal',
@@ -15,7 +15,6 @@ export class ImageModalComponent {
 
   public imageToUpload?: File
   public imgTemp: string | ArrayBuffer | null = ''
-
 
   public closeModal() {
     this.imgTemp = null
@@ -42,7 +41,7 @@ export class ImageModalComponent {
 
     this.fileUploadService
       .updateImage(this.imageToUpload, type, id)
-      .then((img) => {
+      .then(img => {
         Swal.fire('Image updated!', 'Changed image succesfully', 'success')
         this.closeModal()
         this.imageModalService.newImage.emit(img)

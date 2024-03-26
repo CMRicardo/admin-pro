@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { SidebarService } from '@services/sidebar.service';
-import { UsersService } from '@services/users.service';
+import { Component, inject } from '@angular/core'
+import { SidebarService } from '@app/services/sidebar.service'
+import { UsersService } from '@app/services/users.service'
 
 @Component({
   selector: 'app-sidebar',
@@ -10,7 +10,7 @@ import { UsersService } from '@services/users.service';
 export class SidebarComponent {
   private sidebarService = inject(SidebarService)
   private usersService = inject(UsersService)
-  
+
   public menuItems = this.sidebarService.menu
   public user = this.usersService.user
 }
