@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
-import { authGuard } from '../guards/auth.guard'
+import { AdminGuard } from '@app/guards/admin.guard'
+import { AuthGuard } from '@app/guards/auth.guard'
 
 import { Chart1Component } from './chart1/chart1.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
@@ -20,7 +21,7 @@ import { SearchComponent } from './search/search.component'
 const routes: Routes = [
   {
     path: 'dashboard',
-    canActivate: [authGuard],
+    canActivate: [AuthGuard],
     component: PagesComponent,
     children: [
       // Dashboard
@@ -59,6 +60,7 @@ const routes: Routes = [
       // Maintenance
       {
         path: 'users',
+        canActivate: [AdminGuard],
         component: UsersComponent,
         data: { title: 'Users maintenance' }
       },

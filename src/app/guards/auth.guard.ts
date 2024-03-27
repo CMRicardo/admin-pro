@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from '@angular/router'
 import { UsersService } from '@app/services/users.service'
 import { tap } from 'rxjs'
 
-export const authGuard: CanActivateFn = () => {
+export const AuthGuard: CanActivateFn = () => {
   const usersService = inject(UsersService)
   const router = inject(Router)
 
