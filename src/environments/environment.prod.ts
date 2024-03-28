@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://localhost:3000/api'
+  baseUrl: 'https://admin-pro-backend-dev-neek.4.us-1.fl0.io/api'
 }
